@@ -1,3 +1,4 @@
+
 object Lab1 extends App {
 
   //Exercise 1
@@ -28,4 +29,20 @@ object Lab1 extends App {
       x + y + (if (y * y != n) n / y else 0)
     } else x)
   }
+
+  //Exercise 3
+  //Commitiee enum in Committee.scala file
+  case class Deputy(name: String, surname: String, age: Int, party: String, duty: String, committees: List[Committee.Value]) {
+    var Name: String = name
+    var Surname: String = surname
+    var Age: Int = age
+    var Party: String = party
+    var Duty: String = duty
+    var Committees: List[Committee.Value] = committees
+
+  }
+
 };
+
+
+
