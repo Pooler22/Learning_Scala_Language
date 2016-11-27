@@ -22,4 +22,12 @@ class Lab1Test {
   @Test def exercise2_error() {
     Vector[Int](5, 27, 495, 8127).foreach(x => assertFalse(Lab1.isExcellentNumber(x)))
   }
+
+  @Test def exercise2_v2_correct() {
+    Vector[Int](6, 28, 496, 8128).foreach(x => assert(Lab1.isExcellentNumber_v2(x)))
+  }
+
+  @Test def exercise2_v2_error() {
+    Vector[Int](5, 27, 495, 8127).foreach(x => assertFalse(Lab1.isExcellentNumber_v2(x)))
+  }
 }
