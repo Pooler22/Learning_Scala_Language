@@ -41,6 +41,25 @@ object Lab1 extends App {
     var Committees: List[Committee.Value] = committees
 
   }
+  
+    //Exercise 4
+    def exe1(x: List[String]): String= x match {
+      case x1 :: x2 :: Nil => x1 + " i " + x2
+      case x1 :: rest => x1 + " , " + exe1(rest)
+      case x1 :: Nil => x1
+      case  _ => ""
+    }
+
+    def exe1_extend(x:Vector[String]): String ={
+      "{" + exe1(x.toList) + "}"
+    }
+
+    exe1_extend(Vector())
+    exe1_extend(Vector("10"))
+    exe1_extend(Vector("10","10"))
+    exe1_extend(Vector("10","10","10","10"))
+    exe1_extend(Vector("10","10","10","10","10","10"))
+
 
 };
 
