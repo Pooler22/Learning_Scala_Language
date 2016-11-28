@@ -65,3 +65,16 @@ object Lab1 extends App {
 
 
 
+def isCorrectLength(x: String) = x.length == 11
+def isAllDigits(x: String) = x forall Character.isDigit
+
+def correctPESEL(x:String):Boolean ={
+  isCorrectLength(isAllDigits(x))
+
+  }
+  else{
+    false
+  }
+}
+
+correctPESEL("92100600550")
