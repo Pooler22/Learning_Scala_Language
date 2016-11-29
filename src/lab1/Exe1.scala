@@ -8,7 +8,7 @@ object Exe1 extends App {
     case _ => throw new NumberFormatException("allowed int numbers and + - operators")
   }
 
-  calculateExpression("-3 + 4 - 1 + 1 + 13 - 5 + 6".split(" ").toList)
-  calculateExpression("3 + 3".split(" ").toList)
-  calculateExpression("#Error".split(" ").toList)
+  print(calculateExpression("-3 + 4 - 1 + 1 + 13 - 5 + 6".split(" ").toList))
+  print(calculateExpression("3 + 3".split(" ").toList))
+  //calculateExpression("#Error".split(" ").toList)
 }
