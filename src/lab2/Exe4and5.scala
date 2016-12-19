@@ -1,6 +1,7 @@
 package lab2
 
 object Exe4and5 extends App{
+
   class MyList[A](var _list:List[A] = Nil){
     var sizeValue = _list.length
     def size:Integer = sizeValue
@@ -17,8 +18,8 @@ object Exe4and5 extends App{
     def tail : scala.collection.immutable.List[A] = list.tail
     def ::[B >: A](x : B) : scala.collection.immutable.List[B] = { list.:: (x) }
     def :::[B >: A](prefix : scala.collection.immutable.List[B]) : scala.collection.immutable.List[B] = { list.:::(prefix)}
-    override def ++[B >: A, That](that : scala.collection.GenTraversableOnce[B])(implicit bf : scala.collection.generic.CanBuildFrom[scala.collection.immutable.List[A], B, That]) : That = { /* compiled code */ }
-    override def +:[B >: A, That](elem : B)(implicit bf : scala.collection.generic.CanBuildFrom[scala.collection.immutable.List[A], B, That]) : That = { /* compiled code */ }
+//    override def ++[B >: A, That](that : scala.collection.GenTraversableOnce[B])(implicit bf : scala.collection.generic.CanBuildFrom[scala.collection.immutable.List[A], B, That]) : That = { /* compiled code */ }
+//    override def +:[B >: A, That](elem : B)(implicit bf : scala.collection.generic.CanBuildFrom[scala.collection.immutable.List[A], B, That]) : That = { /* compiled code */ }
 
 
     def isLongerThanN(n:Integer):Boolean = sizeValue > n

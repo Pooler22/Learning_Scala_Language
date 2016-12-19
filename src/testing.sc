@@ -1,51 +1,24 @@
-//  object Password{
-//    def isCorrectMinLen(password:String)(min_len:Integer):Boolean = password.length >= min_len
-//    def isCorrectMaxLen(password:String)(max_len:Integer):Boolean = password.length <= max_len
-//  }
-//
-//
-//  Password.isCorrectMaxLen("asd")(4)
-//
-//"aAd".filter(_.isUpper).length
-//
-//val a: Boolean = Boolean =>  true
-
-
-
-math.round("123.1".toFloat).toString
-
-val loadedData = io.Source.fromFile("C:\\Users\\pooler\\IdeaProjects\\jispdr\\src\\lab2\\jispdr-wydatki.csv")
-
-def roundStr: String => String = (x) => {math.round(x.toFloat).toString}
-
-def calculate(x: List[String]): String = x match {
-  case x1 :: x2 :: x3 :: x4 :: Nil  => f"$x1 : ${roundStr(x2)} - ${roundStr(x3)} = ${roundStr(x4)}"
-  case x1 :: x2 :: x3 :: x4 :: rest => f"$x1 : ${roundStr(x2)} - ${roundStr(x3)} = ${roundStr(x4)}, rest: ${rest mkString " "}"
-  case x1 => x1.toString()
+class PasswordChecker{
+  val isCorrectMinLen: String => Integer => Boolean = password => min_len => password.length >= min_len
+  val isCorrectMaxLen: String => Integer => Boolean = password => max_len => password.length <= max_len
+  val isCorrectUppercaseLetterCount:String => Integer => Boolean = password => count =>  password.filter(_.isUpper).length == count
+  val isCorrectLowercaseLetterCount:String => Integer => Boolean = password => count =>  password.filter(_.isLower).length == count
+  val isCorrectDigitCount: String => Integer => Boolean = password => count => password.filter(_.isDigit).length == count
 }
 
-var data = loadedData.getLines.drop(1)
-data.foreach(x=>println(calculate(x.split(",").toList)))
-calculate(List("1","2","3","4","5"))
-calculate(List("test","errot"))
+abstract class PasswordCheckerBuilder{
+  var pc = new PasswordChecker()
+  var expressions:Map[String=> Integer => Boolean, Integer] = Map()
 
-loadedData.close
+  def prepareConditions()
+  def checkPassword(password:String):Boolean = expressions.dropWhile(x=> x._1(password)(x._2)).isEmpty
+}
 
+object SamplePasswordChecker extends PasswordCheckerBuilder{
+  def prepareConditions(): Unit = {
+    expressions = Map((pc.isCorrectMinLen,2),(pc.isCorrectMaxLen,10),(pc.isCorrectDigitCount,2))
+  }
+}
 
-
-
-
-
-
-
-
-//implicit def listToBetterList[T](s: List[T]): BetterList[T] = new BetterList(s)
-//
-//class BetterList[T](val self: List[T]) {
-//  def size: Integer = 0
-//}
-//
-//object MyList extends BetterList
-//
-//val list = List(1, 2, 3, 5, 7, 11)
-//val list2 = BetterList
+SamplePasswordChecker.prepareConditions()
+assert(SamplePasswordChecker.checkPassword("asd12"))
