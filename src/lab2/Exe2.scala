@@ -2,12 +2,15 @@ package lab2
 
 object Exe2 extends App {
   class CSVFileFormatter(path:String){
-    var maxList = List(0,0,0)
+    var maxList = List(0,0,0,0)
 
     def roundStr: String => String = x => math.round(x.toFloat).toString
 
+    def toLeftStr: String => String = x => x + "%-" + 8 + "s"
+    def toRightStr: String => String = x => x + "%" + 8 + "s"
+
     def calculate(x: List[String]): String = x match {
-      case x1 :: x2 :: x3 :: x4 :: rest => f"$x1 : ${roundStr(x2)} - ${roundStr(x3)} = ${roundStr(x4)} ${rest mkString " "}"
+      case x1 :: x2 :: x3 :: x4 :: rest => f"${formatStr(x1).format(x1)} : ${roundStr(x2)}%5s - ${roundStr(x3)}%5s = ${roundStr(x4)}%4s ${rest mkString " "}"
       case x => x mkString " "
     }
 
@@ -17,20 +20,23 @@ object Exe2 extends App {
 
     def getFormatedData():String ={
       val loadedData = io.Source.fromFile(path)
-      val data: List[List[String]] = loadedData.getLines.drop(1).map(y => y.split(",").toList).toList
+      val data = loadedData.getLines.drop(1).map(_.split(",").map(x => x.trim()).toList).toList
+
+      data.foreach { case (x1 :: x2 :: x3 :: x4 :: Nil) =>
+        maxList = getLargestNumbers(maxList, List(x1.length,roundStr(x2).length, roundStr(x3).length, roundStr(x4).length)) }
+      var result = data.map(calculate(_)+"\n")
+
       loadedData.close
 
-      data.foreach( x => x match { case (x1 :: x2 :: x3 :: x4 :: Nil) => maxList = getLargestNumbers(maxList, List(x2.length, x3.length, x4.length)) })
-      data.foreach(calculate(_) + "\n").toString
+      result mkString ""
     }
   }
 
 
   val path = "C:\\Users\\pooler\\IdeaProjects\\jispdr\\src\\lab2\\jispdr-wydatki.csv"
-  var a = new CSVFileFormatter(path)
+  var data = new CSVFileFormatter(path)
+  printf(data.getFormatedData())
 
-  print(a.getFormatedData())
-
-  a.calculate(List("1", "2", "3", "4", "5"))
-  a.calculate(List("test", "errot"))
+//  a.calculate(List("1", "2", "3", "4", "5"))
+//  a.calculate(List("test", "errot"))
 }
