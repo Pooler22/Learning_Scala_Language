@@ -1,24 +1,77 @@
-class PasswordChecker{
-  val isCorrectMinLen: String => Integer => Boolean = password => min_len => password.length >= min_len
-  val isCorrectMaxLen: String => Integer => Boolean = password => max_len => password.length <= max_len
-  val isCorrectUppercaseLetterCount:String => Integer => Boolean = password => count =>  password.filter(_.isUpper).length == count
-  val isCorrectLowercaseLetterCount:String => Integer => Boolean = password => count =>  password.filter(_.isLower).length == count
-  val isCorrectDigitCount: String => Integer => Boolean = password => count => password.filter(_.isDigit).length == count
+implicit class MyList[A](private var _list:List[A] = Nil){
+  private var _size: Int = _list.length
+
+  def list: List[A] = _list
+
+  def list_= (value:List[A]):List[A] = {_size = value.length; _list = value; _list}
+
+  def size:Integer = _size
+
+  private def updateSize:Unit = _size = _list.length
+
+  def :+(element:A): MyList[A] = {_list = _list :+ element; this.updateSize; this}
+
+  def isEmpty : scala.Boolean = list.isEmpty
+
+  def head : A = list.head
+
+  def tail : List[A] = list.tail
+
+//  def ::[B >: A](x : B) : MyList[B] = new MyList[B](list.:: (x))
+//
+//  def :::[B >: A](prefix : List[B]) : List[B] = { list.:::(prefix)}
+//
+//  def ++[B >: A, That](that : GenTraversableOnce[B])(implicit bf : CanBuildFrom[List[A], B, That]) : That = { list.++(that) }
+//  def +:[B >: A, That](elem : B)(implicit bf : CanBuildFrom[List[A], B, That]) : That = { list.+:(elem) }
+
+
+  //  Exercise 5
+  def isLongerThanN(n:Integer):Boolean = _size > n
+
+  def isShorterThanN(n:Integer):Boolean = _size < n
+
+  def <(n:Integer):Boolean = _size < n
+
+  def >(n:Integer):Boolean = _size > n
+
+  def <=(n:Integer):Boolean = _size <= n
+
+  def >=(n:Integer):Boolean = _size >= n
 }
 
-abstract class PasswordCheckerBuilder{
-  var pc = new PasswordChecker()
-  var expressions:Map[String=> Integer => Boolean, Integer] = Map()
-
-  def prepareConditions()
-  def checkPassword(password:String):Boolean = expressions.dropWhile(x=> x._1(password)(x._2)).isEmpty
+def measureTime[T](expression: => T): String = {
+  val t0 = System.nanoTime()
+  val result = expression
+  val t1 = System.nanoTime()
+  "Time: " + (t1 - t0) + "ns result: " + result
 }
 
-object SamplePasswordChecker extends PasswordCheckerBuilder{
-  def prepareConditions(): Unit = {
-    expressions = Map((pc.isCorrectMinLen,2),(pc.isCorrectMaxLen,10),(pc.isCorrectDigitCount,2))
-  }
-}
 
-SamplePasswordChecker.prepareConditions()
-assert(SamplePasswordChecker.checkPassword("asd12"))
+var sample:MyList[Integer] = new MyList[Integer]()
+assert(sample.isEmpty)
+
+sample.list = List(1 ,2 ,3)
+assert(sample.size == 3)
+assert(sample.head == 1)
+assert(sample.tail == List(2,3))
+assert(!sample.isEmpty)
+
+sample = sample :+ 2
+assert(sample.size == 4)
+
+//sample = sample :: 0
+//assert(sample.head == 0)
+
+assert(sample.isLongerThanN(2))
+
+assert(sample.isShorterThanN(10))
+
+assert(sample <= 10)
+
+assert(sample >= 2)
+
+val list = List.fill(1000)(0)
+val myList = MyList(list)
+
+measureTime(list.size)
+measureTime(myList.size)
