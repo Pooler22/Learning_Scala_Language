@@ -6,11 +6,11 @@ object Exe2 extends App {
 
     def roundStr: String => String = x => math.round(x.toFloat).toString
 
-    def toLeftStr: String => String = x => x + "%-" + 8 + "s"
-    def toRightStr: String => String = x => x + "%" + 8 + "s"
+    def toLeftStr(x:String,move:Int):String =  "%-" + move + "s"
+    def toRightStr(x:String,move:Int):String = "%" + move + "s"
 
     def calculate(x: List[String]): String = x match {
-      case x1 :: x2 :: x3 :: x4 :: rest => f"${formatStr(x1).format(x1)} : ${roundStr(x2)}%5s - ${roundStr(x3)}%5s = ${roundStr(x4)}%4s ${rest mkString " "}"
+      case x1 :: x2 :: x3 :: x4 :: rest => f"${toLeftStr(x1, maxList(0)).format(x1)} : ${toRightStr(x1,maxList(1)).format(roundStr(x2))} - ${toRightStr(x1,maxList(2)).format(roundStr(x3))} = ${toRightStr(x1,maxList(3)).format(roundStr(x4))} ${rest mkString " "}"
       case x => x mkString " "
     }
 
