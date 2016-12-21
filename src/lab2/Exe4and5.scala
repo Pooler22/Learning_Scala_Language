@@ -20,13 +20,6 @@ object Exe4and5 extends App{
 
     def tail : List[A] = list.tail
 
-    //  def ::[B >: A](x : B) : MyList[B] = new MyList[B](list.:: (x))
-    //
-    //  def :::[B >: A](prefix : List[B]) : List[B] = { list.:::(prefix)}
-    //
-    //  def ++[B >: A, That](that : GenTraversableOnce[B])(implicit bf : CanBuildFrom[List[A], B, That]) : That = { list.++(that) }
-    //  def +:[B >: A, That](elem : B)(implicit bf : CanBuildFrom[List[A], B, That]) : That = { list.+:(elem) }
-
     //  Exercise 5
     def isLongerThanN(n:Integer):Boolean = _size > n
 
@@ -60,9 +53,6 @@ object Exe4and5 extends App{
 
   sample = sample :+ 2
   assert(sample.size == 4)
-
-  //sample = sample :: 0
-  //assert(sample.head == 0)
 
   assert(sample.isLongerThanN(2))
 
