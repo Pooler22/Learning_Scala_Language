@@ -62,7 +62,7 @@ object Exe3 extends App {
   val commitionLimit = 2
   DeputiesData
     .groupBy(_.Committees)
-    .filterKeys(_.length == commitionLimit)
+    .filterKeys(_.length >= commitionLimit)
     .foreach(p => println("Komisje:  " + (p._1 mkString ", ") + ",\nPosłowie:\n\t" + (p._2 mkString ",\n")))
   println()
 
