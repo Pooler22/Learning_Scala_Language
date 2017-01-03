@@ -90,7 +90,7 @@ object Exe4 extends App{
   assert(seq.exists(x=>expressionExists(x)) == seq.my_exists(x=>expressionExists(x)))
 
 
-  //SEQ
+  //SET
 
   val set = Set(1, 2, 3, 4, 5, 6) //> set  : set[Integer] = set(1, 2, 3, 4, 5, 6)
 
