@@ -1,34 +1,26 @@
 package lab3
 
-object Exe1and2 extends App {
-
+object Exe3 extends App{
   implicit class MyHelper[S](list: List[S]) {
+
+    def processList[R](f1: S => R)(f2: R => Boolean):List[R] = {
+      list.map(f1(_)).filter(f2(_))
+    }
+
     def my_map[R](f: S => R): List[R] = {
-      list match {
-        case head :: tail => f(head) :: tail.my_map(f)
-        case _ => Nil
-      }
+      processList(f)(x=>true)
     }
 
     def my_filter(f: S => Boolean): List[S] = {
-      list match {
-        case head :: tail => if (f(head)) head :: tail.my_filter(f) else tail.my_filter(f)
-        case _ => Nil
-      }
+      processList(x=>x)(f)
     }
 
     def my_forall(f: S => Boolean): Boolean = {
-      list match {
-        case head :: tail => if (f(head)) tail.my_forall(f) else false
-        case _ => true
-      }
+      processList(x=>x)(f).length == list.length
     }
 
     def my_exists(f: S => Boolean): Boolean = {
-      list match {
-        case head :: tail => if (f(head)) true else tail.my_exists(f)
-        case _ => false
-      }
+      processList(x=>x)(f).nonEmpty
     }
   }
 
